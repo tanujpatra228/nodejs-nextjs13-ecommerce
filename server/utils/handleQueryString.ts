@@ -47,35 +47,4 @@ const generateMongoFilterfromQueryString = (query: SearchQuery) => {
     return filters;
 };
 
-const generateQueryObject = (query: SearchQuery) => {
-    const output: any = {};
-
-    if (query.price) {
-        const priceValues = query.price.split(",");
-        const priceConditions = priceValues.map((value: string) => {
-            const [min, max] = value.split("-").map(Number);
-            return { finalrate: { $gte: min, $lte: max } };
-        });
-        output.$or = output.$or || [];
-        output.$or.push({ $and: priceConditions });
-    }
-
-    if (query.category) {
-        const categories = query.category.split(",");
-        output.category = { $in: categories };
-    }
-
-    if (query.discount) {
-        const discountValues = query.discount.split(",");
-        const discountConditions = discountValues.map((value: string) => {
-            const [min, max] = value.split("-").map(Number);
-            return { discount: { $gte: min, $lte: max } };
-        });
-        output.$or = output.$or || [];
-        output.$or.push({ $and: discountConditions });
-    }
-
-    return output;
-};
-
-module.exports = { generateMongoFilterfromQueryString, generateQueryObject };
+module.exports = { generateMongoFilterfromQueryString };
