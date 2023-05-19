@@ -1,0 +1,30 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+*.env
+
+# Next.js
+.next/
+out/
+.next-cache/
+.next-server/
+
+# TypeScript
+*.tsbuildinfo
+
+# Build artifacts
+build/
+dist/
+
+# Logs
+logs/
+*.log
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+
+# Dependency lock files
+package-lock.json
+yarn.lock
