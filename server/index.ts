@@ -35,9 +35,11 @@ app.use(express.json());
 
 const productRoutes = require('./routes/products.ts');
 const categoriesRoutes = require('./routes/categories.ts');
+const cartRoutes = require('./routes/cart.ts');
 
 app.use('/products', productRoutes);
 app.use('/categories', categoriesRoutes);
+app.use('/cart', cartRoutes);
 
 // DB Connection
 mongoose.connect(process.env.MONGODB_URI ?? "", { useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions).then(() => {

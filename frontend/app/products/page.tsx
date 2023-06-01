@@ -15,8 +15,7 @@ const Product = async ({ searchParams }: any) => {
     return (
         <>
             <section className="mt-32 mx-auto px-4 sm:px-6 lg:px-8">
-
-                <div className="mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-5 grid-rows-5 gap-4">
+                <div className="mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-5 grid-rows-5 gap-8">
                     {/* Sidebar */}
                     <Sidebar className='sidebar-grid-area' />
 
@@ -29,7 +28,7 @@ const Product = async ({ searchParams }: any) => {
                         </div>
 
                         {/* Products */}
-                        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
                             {
                                 products?.length > 0 ? products.map((product) => {
                                     return (

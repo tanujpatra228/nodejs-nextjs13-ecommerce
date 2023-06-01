@@ -6,7 +6,7 @@ import Logo from './ui/Logo';
 const NavBar = () => {
     return (
         <nav className="p-4 bg-blue-900 text-gray-200 fixed top-0 left-0 right-0 z-10 shadow-lg">
-            <div className="max-w-[1480px] m-auto flex justify-between items-center">
+            <div className="px-4 sm:px-6 lg:px-10 m-auto flex justify-between items-center">
                 <div className="flex items-center">
                     <i className="text-2xl fas fa-campground" />
                     <h1 className="font-serif tracking-wide font-bold text-xl">
