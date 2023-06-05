@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { SocialIcon } from 'react-social-icons';
 import Logo from './ui/Logo';
+import AuthButton from './ui/AuthButton';
 
 const NavBar = () => {
     return (
@@ -41,6 +42,7 @@ const NavBar = () => {
                     <SocialIcon url='https://www.linkedin.com/' fgColor='#ECECEC' bgColor='transparent' className='text-2xl pr-8' />
                     <SocialIcon url='https://www.instagram.com/' fgColor='#ECECEC' bgColor='transparent' className='text-2xl pr-8' />
                     <SocialIcon url='https://www.twitter.com/' fgColor='#ECECEC' bgColor='transparent' className='text-2xl pr-8' />
+                    <AuthButton />
                 </div>
             </div>
             {/* MOBILE MENU */}
