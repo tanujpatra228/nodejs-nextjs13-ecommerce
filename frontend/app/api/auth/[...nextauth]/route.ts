@@ -5,8 +5,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions = {
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID ?? "257345838182-6adr5jeem0pct3f5pjd5shj6gik1svn2.apps.googleusercontent.com",
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "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"
+            clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
         }),
         CredentialsProvider({
             name: "credentials",
@@ -20,11 +20,11 @@ export const authOptions = {
             },
         }),
     ],
-    // pages: {
-    //     signin: "/login",
-    // },
+    pages: {
+        signIn: '/login',
+    },
+    strategy: "jwt",
     secret: process.env.JWT_SECRET,
-    debug: true,
 };
 
 const handler = NextAuth(authOptions);

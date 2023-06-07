@@ -12,13 +12,13 @@ type ProductImageProps = {
 };
 
 const ProductImage = ({ product, fill, width, height, className }: ProductImageProps) => {
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     return (
         <>
-            <img
+            <Image
                 src={`https://www.m4mformen.com/${product.itemimage}`}
-                // fill={fill}
+                fill={fill}
                 alt={product.itemname}
                 width={width || 500}
                 height={height || 500}
@@ -26,8 +26,8 @@ const ProductImage = ({ product, fill, width, height, className }: ProductImageP
                     ? 'opacity-30 blur-lg grayscale'
                     : 'blur-0 grayscale-0'
                     }`}
-            // onLoadingComplete={() => setLoading(false)}
-            // onError={() => console.log(`${product.itemimage} failed to load`)}
+                onLoadingComplete={() => setLoading(false)}
+                onError={() => console.log(`${product.itemimage} failed to load`)}
             />
         </>
     )

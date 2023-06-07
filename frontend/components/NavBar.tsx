@@ -3,6 +3,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { SocialIcon } from 'react-social-icons';
 import Logo from './ui/Logo';
 import AuthButton from './ui/AuthButton';
+import LoginBtnGoogle from './ui/LoginBtnGoogle';
 
 const NavBar = () => {
     return (
@@ -35,6 +36,9 @@ const NavBar = () => {
                         <li className="text-lg pr-8">
                             <Link href='/contact' className="transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>Contact</Link>
                         </li>
+                        <li className="text-lg pr-8">
+                            <AuthButton />
+                        </li>
                     </ul>
                 </div>
                 <div className="hidden md:flex">
@@ -42,7 +46,6 @@ const NavBar = () => {
                     <SocialIcon url='https://www.linkedin.com/' fgColor='#ECECEC' bgColor='transparent' className='text-2xl pr-8' />
                     <SocialIcon url='https://www.instagram.com/' fgColor='#ECECEC' bgColor='transparent' className='text-2xl pr-8' />
                     <SocialIcon url='https://www.twitter.com/' fgColor='#ECECEC' bgColor='transparent' className='text-2xl pr-8' />
-                    <AuthButton />
                 </div>
             </div>
             {/* MOBILE MENU */}

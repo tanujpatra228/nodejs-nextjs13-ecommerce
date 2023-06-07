@@ -101,7 +101,7 @@ const SingleProduct = async ({ params }: ParamProps) => {
 
                                 <label htmlFor="qty" className='absolute right-0 top-0 bottom-0 m-auto w-6 h-6 flex items-center justify-center text-gray-400 pointer-events-none'>
                                     <svg className="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                        <path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                     </svg>
                                 </label>
                             </div>

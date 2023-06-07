@@ -9,7 +9,6 @@ const AuthButton = () => {
             {
                 session && session.user ? (
                     <div className='flex gap-4 ml-auto'>
-                        <p className='text-sky-600'>{session.user.name}</p>
                         <button onClick={() => signOut()}>
                             Logout
                         </button>
