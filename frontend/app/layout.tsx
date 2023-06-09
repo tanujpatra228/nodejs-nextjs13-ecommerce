@@ -2,7 +2,7 @@ import NavBar from '@/components/NavBar';
 import './globals.css';
 import { Metadata } from 'next';
 import ToastWrapper from '@/components/ui/ToastWrapper';
-import AuthSessionProvider from '@/components/AuthSessionProvider';
+import Providers from '@/components/Providers';
 
 export const metadata: Metadata = {
     title: 'Online Shopping | Buy Clothing and Fashion Accessories',
@@ -17,7 +17,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <AuthSessionProvider>
+                <Providers>
                     <header>
                         <NavBar />
                     </header>
@@ -25,7 +25,7 @@ export default function RootLayout({
                         {children}
                     </main>
                     <ToastWrapper />
-                </AuthSessionProvider>
+                </Providers>
             </body>
         </html>
     )

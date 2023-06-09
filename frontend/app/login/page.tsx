@@ -1,7 +1,15 @@
 import LoginBtnGoogle from "@/components/ui/LoginBtnGoogle";
 import Logo from "@/components/ui/Logo";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import Redirect from "@/components/ui/Redirect";
 
-const page = () => {
+const page = async () => {
+    const session = await getServerSession(authOptions);
+    if (session) {
+        return <Redirect to={'/'} />
+    }
+
     return (
         <section className="flex items-center min-h-screen mx-auto bg-gray-100 lg:justify-center px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md">

@@ -1,34 +1,37 @@
 "use client"
 import BagIcon from './BagIcon';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-
+import { useDispatch } from 'react-redux';
+import { addToCart } from '@/redux/slice/cart';
 
 type Props = {
     product: Product;
 };
 
-const addToCart = async (product: Product) => {
-    try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/add-product`, {
-            user: Math.round(Math.random() * 1000),
-            product: product
-        });
+const handleAddToCart = async (cartData: CartData, dispatch: any) => {
+    const response = await dispatch(addToCart(cartData));
 
-        if (response.status === 200) {
-            console.log('response', response);
-            toast.success("Product added to cart");
-        }
-    } catch (error) {
-        toast.error("Something went wrong!");
+    if (response?.payload?.statusText === "OK") {
+        toast.success("Product added to cart");
     }
-
 }
 
 const AddToCartBtn = ({ product }: Props) => {
+    const dispatch = useDispatch();
+    const { data: session } = useSession();
+    const productData = {
+        id: product._id,
+        itemname: product.itemname,
+        finalrate: product.finalrate,
+        qty: 1,
+    };
+    const router = useRouter();
     return (
         <>
-            <button onClick={() => addToCart(product)}>
+            <button onClick={() => session ? handleAddToCart({ productData, session }, dispatch) : router.push('/login')}>
                 <BagIcon />
             </button>
         </>

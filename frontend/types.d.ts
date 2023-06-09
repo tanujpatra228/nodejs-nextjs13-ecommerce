@@ -18,3 +18,19 @@ type SliderImages = {
     img: string;
     alt: string;
 };
+
+type CartData = {
+    productData: {
+        id: String,
+        itemname: String,
+        finalrate: Number,
+        qty: Number,
+    },
+    session: {
+        user?: {
+            name?: String | null | undefined
+            email?: String | null | undefined
+            image?: String | null | undefined
+        }
+    }
+};

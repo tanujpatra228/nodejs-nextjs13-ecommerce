@@ -9,7 +9,6 @@ import { getAllProducts } from "@/utils/fetchDB";
 export default async function Home() {
     const products: Product[] = await getAllProducts();
     const session = await getServerSession(authOptions);
-    console.log('session', session);
 
     return (
         <>
@@ -23,6 +22,10 @@ export default async function Home() {
 
             <section className="max-w-[1480px] mx-auto pt-16">
                 <ProductSlider title="On Sale" products={products} />
+            </section>
+
+            <section className="max-w-[1480px] mx-auto pt-16">
+                <ProductSlider title="New in Trousers" products={products} />
             </section>
         </>
     )
