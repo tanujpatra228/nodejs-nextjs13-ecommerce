@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 type ProductImageProps = {
-    product: Product;
+    product: Product | CartItem;
     fill?: boolean;
     width?: number;
     height?: number;

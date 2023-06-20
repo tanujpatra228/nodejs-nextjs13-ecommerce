@@ -10,7 +10,19 @@ export const addToCart = createAsyncThunk('addToCart', async (params: CartData) 
     });
 
     if (response.status === 200) {
-        console.log('response', response);
+        return response.data;
+    }
+    return null;
+});
+
+type RemoveRequestType = {
+    cartId: string;
+    id: string;
+};
+export const removeFromCart = createAsyncThunk('removeFromCart', async ({ cartId, id }: RemoveRequestType) => {
+    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart/remove-product`, { cartId, id });
+
+    if (response.status === 200) {
         return response.data;
     }
     return null;
@@ -24,7 +36,7 @@ const cartSlice = createSlice({
         isError: false,
     },
     reducers: {
-        addToCart: (state, action) => { }
+        addToCart: () => { }
     },
     extraReducers(builder) {
         builder.addCase(addToCart.pending, (state, action) => {
@@ -35,6 +47,17 @@ const cartSlice = createSlice({
             if (action.payload) state.data = action.payload;
         });
         builder.addCase(addToCart.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        builder.addCase(removeFromCart.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(removeFromCart.fulfilled, (state, action) => {
+            state.isLoading = false;
+            if (action.payload && action.payload.status === 'success') state.data = action.payload;
+        });
+        builder.addCase(removeFromCart.rejected, (state, action) => {
             state.isLoading = false;
         });
     },

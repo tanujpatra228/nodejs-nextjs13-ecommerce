@@ -1,6 +1,5 @@
 "use client"
 import BagIcon from './BagIcon';
-import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -14,7 +13,7 @@ type Props = {
 const handleAddToCart = async (cartData: CartData, dispatch: any) => {
     const response = await dispatch(addToCart(cartData));
 
-    if (response?.payload?.statusText === "OK") {
+    if (response?.payload?.status === "success") {
         toast.success("Product added to cart");
     }
 }
@@ -25,6 +24,8 @@ const AddToCartBtn = ({ product }: Props) => {
     const productData = {
         id: product._id,
         itemname: product.itemname,
+        itemimage: product.itemimage,
+        category: product.category,
         finalrate: product.finalrate,
         qty: 1,
     };

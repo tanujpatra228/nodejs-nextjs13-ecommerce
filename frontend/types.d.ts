@@ -19,18 +19,23 @@ type SliderImages = {
     alt: string;
 };
 
+type CartItem = {
+    _id?: string,
+    id?: string,
+    itemname: string,
+    itemimage: string,
+    category: string,
+    finalrate: number,
+    qty: number,
+}
+
 type CartData = {
-    productData: {
-        id: String,
-        itemname: String,
-        finalrate: Number,
-        qty: Number,
-    },
+    productData: CartItem,
     session: {
         user?: {
-            name?: String | null | undefined
-            email?: String | null | undefined
-            image?: String | null | undefined
+            name?: string | null | undefined
+            email?: string | null | undefined
+            image?: string | null | undefined
         }
     }
 };
