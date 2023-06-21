@@ -22,7 +22,7 @@ const CartBtn = () => {
 
     return (
         <>
-            <button className='rounded-full px-2 py-1 flex justify-center items-center relative text-xl' onClick={() => setCartIsOpen(!cartIsOpen)}>
+            <button className='rounded-full px-2 py-1 flex justify-center items-center relative text-xl' onClick={() => setCartIsOpen(true)}>
                 <FiShoppingCart />
                 {!isNaN(totalQty) && totalQty > 0 && (
                     <>
@@ -31,7 +31,7 @@ const CartBtn = () => {
                     </>
                 )}
             </button>
-            {cartIsOpen && <CartSidebar isOpen={cartIsOpen} setIsOpen={setCartIsOpen} />}
+            <CartSidebar isOpen={cartIsOpen} setCartIsOpen={setCartIsOpen} />
         </>
     )
 }

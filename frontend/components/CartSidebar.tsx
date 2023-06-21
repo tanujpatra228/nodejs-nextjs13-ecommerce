@@ -6,19 +6,20 @@ import EmptyResource from './ui/EmptyResource';
 
 type Props = {
     isOpen: boolean;
-    setIsOpen: (p: boolean) => void;
+    setCartIsOpen: (p: boolean) => void;
 };
 
-const CartSidebar = ({ isOpen, setIsOpen }: Props) => {
+const CartSidebar = ({ isOpen, setCartIsOpen }: Props) => {
     const { cart } = useSelector(state => state);
     const totalQty = cart?.data.totalQty;
+    const cartTotal = cart?.data.cartTotal;
     const cartItem = cart?.data.products || [];
 
     return (
         <>
             <Dialog
                 open={isOpen}
-                onClose={() => setIsOpen(false)}
+                onClose={() => setCartIsOpen(false)}
                 className={`absolute inset-0 z-20 p-8 h-screen`}
             >
                 <Dialog.Overlay className="fixed inset-0 bg-black/30" aria-hidden="true" />
@@ -36,13 +37,26 @@ const CartSidebar = ({ isOpen, setIsOpen }: Props) => {
                             )
                         }
                     </div>
-                    <div className='relative pt-6'>
-                        <div className='flex flex-col gap-5 px-6 py-2'>
-                            <span className='text-xl font-bold'>Total</span>
-                            <button className='p-3 border border-blue-800 transition delay-75 hover:bg-blue-800 hover:text-white'>View Cart</button>
-                            <button className='p-3 border border-blue-800 text-white transition delay-75 bg-blue-800 hover:bg-blue-900'>Checkout</button>
+                    {totalQty > 0 ? (
+                        <div className='relative pt-6'>
+                            <div className='flex flex-col gap-5 px-6 py-2'>
+                                <span className='text-xl font-bold'>Total: ${cartTotal}</span>
+                                <button className='p-3 border border-blue-800 transition delay-75 hover:bg-blue-800 hover:text-white'>View Cart</button>
+                                <button className='p-3 border border-blue-800 text-white transition delay-75 bg-blue-800 hover:bg-blue-900'>Checkout</button>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className='relative pt-6'>
+                            <div className='flex flex-col gap-5 px-6 py-2'>
+                                <button
+                                    className='p-3 border border-blue-800 text-white transition delay-75 bg-blue-800 hover:bg-blue-900'
+                                    onClick={() => setCartIsOpen(false)}
+                                >
+                                    Continue Shopping
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </Dialog.Panel>
             </Dialog>
         </>

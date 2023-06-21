@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { getCartTotal } from '../utils/cart';
 const router = express.Router();
 const Cart = require('../models/cart');
 
@@ -23,8 +24,9 @@ router.post('/add-product', async (req: Request, res: Response) => {
         }
         await cart.save();
     }
+    const cartTotal = getCartTotal(cart);
     const totalQty = cart.products.reduce((acc: number, product: any) => acc + product.qty, 0);
-    return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [] });
+    return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [], cartTotal: cartTotal });
 });
 
 router.patch('/remove-product', async (req: Request, res: Response) => {
@@ -45,8 +47,9 @@ router.patch('/remove-product', async (req: Request, res: Response) => {
 
         await cart.save();
 
+        const cartTotal = getCartTotal(cart);
         const totalQty = cart.products.reduce((acc: number, product: any) => acc + product.qty, 0);
-        return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [] });
+        return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [], cartTotal: cartTotal });
     } catch (error) {
         return res.status(500).json({ error: 'Internal server error' });
     }
