@@ -19,9 +19,9 @@ const ProductCard = ({ product }: Props) => {
                     <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
                     <p className="text-lg font-bold text-black truncate block capitalize">{itemname}</p>
                     <div className="flex items-center">
-                        <p className="text-lg font-semibold text-black cursor-auto my-3">${finalrate}</p>
+                        <p className="text-lg font-semibold text-black cursor-auto my-3">₹{finalrate}</p>
                         {salerate !== 0 && (<del>
-                            <p className="text-sm text-gray-600 cursor-auto ml-2">${salerate}</p>
+                            <p className="text-sm text-gray-600 cursor-auto ml-2">₹{salerate}</p>
                         </del>)}
                         <div className="ml-auto">
                             <AddToCartBtn product={product} />

@@ -5,7 +5,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import CartSidebar from '../CartSidebar';
 
 const CartBtn = () => {
-    const { cart } = useSelector(state => state);
+    const { cart } = useSelector((state: any) => state);
     const [cartIsOpen, setCartIsOpen] = useState(false);
     const ping = useRef<HTMLSpanElement>();
     const totalQty = cart?.data.totalQty;

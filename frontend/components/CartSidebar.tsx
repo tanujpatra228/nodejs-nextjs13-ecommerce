@@ -3,6 +3,7 @@ import { Dialog } from '@headlessui/react';
 import CartItem from './CartItem';
 import { useSelector } from 'react-redux';
 import EmptyResource from './ui/EmptyResource';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     isOpen: boolean;
@@ -10,7 +11,8 @@ type Props = {
 };
 
 const CartSidebar = ({ isOpen, setCartIsOpen }: Props) => {
-    const { cart } = useSelector(state => state);
+    const { cart } = useSelector((state: any) => state);
+    const route = useRouter();
     const totalQty = cart?.data.totalQty;
     const cartTotal = cart?.data.cartTotal;
     const cartItem = cart?.data.products || [];
@@ -40,8 +42,14 @@ const CartSidebar = ({ isOpen, setCartIsOpen }: Props) => {
                     {totalQty > 0 ? (
                         <div className='relative pt-6'>
                             <div className='flex flex-col gap-5 px-6 py-2'>
-                                <span className='text-xl font-bold'>Total: ${cartTotal}</span>
-                                <button className='p-3 border border-blue-800 transition delay-75 hover:bg-blue-800 hover:text-white'>View Cart</button>
+                                <span className='text-xl font-bold'>Total: ₹{cartTotal}</span>
+                                <button
+                                    className='p-3 border border-blue-800 transition delay-75 hover:bg-blue-800 hover:text-white'
+                                    onClick={() => {
+                                        route.replace('/cart');
+                                        setCartIsOpen(false);
+                                    }}
+                                >View Cart</button>
                                 <button className='p-3 border border-blue-800 text-white transition delay-75 bg-blue-800 hover:bg-blue-900'>Checkout</button>
                             </div>
                         </div>

@@ -55,4 +55,27 @@ router.patch('/remove-product', async (req: Request, res: Response) => {
     }
 });
 
+router.patch('/update-qty', async (req: Request, res: Response) => {
+    const { cartId, id, qty } = req.body;
+
+    try {
+        const cart = await Cart.findById(cartId);
+        if (!cart) {
+            return res.status(404).json({ error: 'Cart not found' });
+        }
+
+        const productIndex = cart.products.findIndex((product: any) => product.id === id);
+        cart.products[productIndex].qty = qty;
+        cart.markModified('products');
+        await cart.save();
+
+        const cartTotal = getCartTotal(cart);
+        const totalQty = cart.products.reduce((acc: number, product: any) => acc + product.qty, 0);
+        return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [], cartTotal: cartTotal });
+
+    } catch (error) {
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = router;

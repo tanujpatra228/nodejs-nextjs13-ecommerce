@@ -26,7 +26,6 @@ const ShopFilter = ({ filter, filterItems, className }: ShopFilterProps) => {
             : categories.filter((cat) => cat !== category);
 
         const params = new URLSearchParams(searchParams.toString());
-        console.log('updatedCategories', updatedCategories);
 
         params.set(filter, updatedCategories.join(","));
 

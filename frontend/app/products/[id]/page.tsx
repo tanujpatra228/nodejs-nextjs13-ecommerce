@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Breadcrumb from "@/components/Breadcrumb";
 import ProductImage from "@/components/ui/ProductImage";
 import { getAllProducts, getProductById } from "@/utils/fetchDB";
+import AddToCartBtn from '@/components/ui/AddToCartBtn';
 
 type ParamProps = {
     params: { id: string };
@@ -16,7 +17,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ParamProps): Promise<Metadata> {
     // fetch data
-    const { product } = await getProductById(params.id);
+    const { product }: { product: Product } = await getProductById(params.id);
     return {
         title: product.itemname,
         openGraph: {
@@ -52,7 +53,7 @@ const SingleProduct = async ({ params }: ParamProps) => {
                     </div>
                     <div className="mx-2 grid-rows-none min-h-min rounded-lg p-4">
                         <h1 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">{product.itemname}</h1>
-                        <p className="text-gray-500 text-sm">By <span className="text-blue-800 hover:underline">ABC Company</span></p>
+                        <p className="text-blue-800 capitalize">{product.category}</p>
                         <div className="flex items-center space-x-4 my-4">
                             <div>
                                 <div className="rounded-lg bg-gray-100 flex py-2 px-3">
@@ -88,27 +89,8 @@ const SingleProduct = async ({ params }: ParamProps) => {
                             }
                         </div>
 
-                        <div className="flex items-center py-4 space-x-4">
-                            <div className="relative flex justify-between items-center bg-gray-200 w-16 h-10 overflow-hidden rounded-lg">
-
-                                <select id='qty' className="cursor-pointer appearance-none rounded-xl border border-gray-200 flex items-end py-2 pl-5 pr-8">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-
-                                <label htmlFor="qty" className='absolute right-0 top-0 bottom-0 m-auto w-6 h-6 flex items-center justify-center text-gray-400 pointer-events-none'>
-                                    <svg className="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                    </svg>
-                                </label>
-                            </div>
-
-                            <button type="button" className="h-10 px-6 py-2 font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white">
-                                Add to Cart
-                            </button>
+                        <div className="flex items-center py-4">
+                            <AddToCartBtn product={product} showQty={true} />
                         </div>
                         <div className="mb-4">
                             <h2 className="text-lg font-semibold mb-2">Product Details</h2>

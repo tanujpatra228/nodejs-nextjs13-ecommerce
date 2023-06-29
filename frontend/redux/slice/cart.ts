@@ -1,32 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
+import { addToCart, removeFromCart, updateQty } from './cartMethods';
 
-
-export const addToCart = createAsyncThunk('addToCart', async (params: CartData) => {
-    const { productData, session } = params;
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/add-product`, {
-        product: productData,
-        user: session?.user?.email,
-    });
-
-    if (response.status === 200) {
-        return response.data;
-    }
-    return null;
-});
-
-type RemoveRequestType = {
-    cartId: string;
-    id: string;
-};
-export const removeFromCart = createAsyncThunk('removeFromCart', async ({ cartId, id }: RemoveRequestType) => {
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart/remove-product`, { cartId, id });
-
-    if (response.status === 200) {
-        return response.data;
-    }
-    return null;
-});
 
 const cartSlice = createSlice({
     name: "cart",
@@ -39,6 +13,7 @@ const cartSlice = createSlice({
         addToCart: () => { }
     },
     extraReducers(builder) {
+        // Add to Cart
         builder.addCase(addToCart.pending, (state, action) => {
             state.isLoading = true;
         });
@@ -50,6 +25,7 @@ const cartSlice = createSlice({
             state.isLoading = false;
         });
 
+        // Remove from Cart
         builder.addCase(removeFromCart.pending, (state, action) => {
             state.isLoading = true;
         });
@@ -58,6 +34,18 @@ const cartSlice = createSlice({
             if (action.payload && action.payload.status === 'success') state.data = action.payload;
         });
         builder.addCase(removeFromCart.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        // Update Qty
+        builder.addCase(updateQty.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(updateQty.fulfilled, (state, action) => {
+            state.isLoading = false;
+            if (action.payload && action.payload.status === 'success') state.data = action.payload;
+        });
+        builder.addCase(updateQty.rejected, (state, action) => {
             state.isLoading = false;
         });
     },
