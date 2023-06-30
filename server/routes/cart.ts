@@ -6,27 +6,35 @@ const Cart = require('../models/cart');
 router.post('/add-product', async (req: Request, res: Response) => {
     const { product, user } = req.body;
     const cart = await Cart.findOne({ user: user });
+    let currentCart = null;
 
-    if (!cart) {
-        const newCart = new Cart({
-            user: user,
-            products: [product]
-        });
-        await newCart.save();
-    } else {
-        const productIndex = cart.products.findIndex((p: any) => p.id === product.id);
-        if (productIndex !== -1) {
-            cart.products[productIndex].qty += product.qty;
-            cart.products[productIndex].finalrate = product.finalrate;
-            cart.markModified('products');
+    try {
+        if (!cart) {
+            const newCart = new Cart({
+                user: user,
+                products: [product]
+            });
+            await newCart.save();
+            currentCart = newCart;
         } else {
-            cart.products.push(product);
+            const productIndex = cart.products.findIndex((p: any) => p.id === product.id);
+            if (productIndex !== -1) {
+                cart.products[productIndex].qty += product.qty;
+                cart.products[productIndex].finalrate = product.finalrate;
+                cart.markModified('products');
+            } else {
+                cart.products.push(product);
+            }
+            await cart.save();
+            currentCart = cart;
         }
-        await cart.save();
+        const cartTotal = getCartTotal(currentCart);
+        const totalQty = currentCart.products.reduce((acc: number, product: any) => acc + product.qty, 0);
+        return res.status(200).send({ status: 'success', _id: currentCart._id, totalQty: totalQty, products: currentCart?.products || [], cartTotal: cartTotal });
+    } catch (error) {
+        if (error instanceof Error) return res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: 'Internal server error' });
     }
-    const cartTotal = getCartTotal(cart);
-    const totalQty = cart.products.reduce((acc: number, product: any) => acc + product.qty, 0);
-    return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [], cartTotal: cartTotal });
 });
 
 router.patch('/remove-product', async (req: Request, res: Response) => {
@@ -44,13 +52,18 @@ router.patch('/remove-product', async (req: Request, res: Response) => {
         }
 
         cart.products.splice(productIndex, 1);
-
         await cart.save();
+
+        if (cart.products?.length < 1) {
+            await Cart.findByIdAndDelete(cartId);
+            return res.status(200).send({ status: 'success', _id: cart._id, totalQty: 0, products: [], cartTotal: 0 });
+        }
 
         const cartTotal = getCartTotal(cart);
         const totalQty = cart.products.reduce((acc: number, product: any) => acc + product.qty, 0);
         return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [], cartTotal: cartTotal });
-    } catch (error) {
+    } catch (error: any) {
+        if (error instanceof Error) return res.status(500).json({ error: error.message });
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -74,6 +87,7 @@ router.patch('/update-qty', async (req: Request, res: Response) => {
         return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [], cartTotal: cartTotal });
 
     } catch (error) {
+        if (error instanceof Error) return res.status(500).json({ error: error.message });
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
