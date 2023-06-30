@@ -1,13 +1,16 @@
 'use client'
 import { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FiShoppingCart } from 'react-icons/fi';
 import CartSidebar from '../CartSidebar';
 import { useSession } from 'next-auth/react';
+import { getCart } from '@/redux/slice/cartMethods';
+import { clearCart } from '@/redux/slice/cart';
 
 const CartBtn = () => {
     const { data: session } = useSession();
     const { cart } = useSelector((state: any) => state);
+    const dispatch = useDispatch();
     const [cartIsOpen, setCartIsOpen] = useState(false);
     const ping = useRef<HTMLSpanElement>();
     const totalQty = cart?.data.totalQty;
@@ -21,6 +24,11 @@ const CartBtn = () => {
             clearTimeout(timeout);
         }
     });
+
+    useEffect(() => {
+        console.log('session', session);
+        session ? dispatch(getCart(session)) : dispatch(clearCart());
+    }, [session]);
 
     return (
         <>

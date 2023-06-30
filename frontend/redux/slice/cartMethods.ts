@@ -1,6 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+export const getCart = createAsyncThunk('getCart', async (session: Session) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cart?user=${session?.user?.email || ''}`);
+
+    if (response.status === 200) {
+        return response.data;
+    }
+    return null;
+});
+
 export const addToCart = createAsyncThunk('addToCart', async (params: CartData) => {
     const { productData, session } = params;
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/add-product`, {

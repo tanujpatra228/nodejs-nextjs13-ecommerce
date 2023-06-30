@@ -3,6 +3,23 @@ import { getCartTotal } from '../utils/cart';
 const router = express.Router();
 const Cart = require('../models/cart');
 
+router.get('/', async (req: Request, res: Response) => {
+    const { user } = req.query;
+    const cart = await Cart.findOne({ user: user });
+
+    try {
+        if (!cart) {
+            return res.status(200).send({ status: 'success', _id: '', totalQty: 0, products: [], cartTotal: 0 });
+        }
+        const cartTotal = getCartTotal(cart);
+        const totalQty = cart.products.reduce((acc: number, product: any) => acc + product.qty, 0);
+        return res.status(200).send({ status: 'success', _id: cart._id, totalQty: totalQty, products: cart?.products || [], cartTotal: cartTotal });
+    } catch (error) {
+        if (error instanceof Error) return res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 router.post('/add-product', async (req: Request, res: Response) => {
     const { product, user } = req.body;
     const cart = await Cart.findOne({ user: user });

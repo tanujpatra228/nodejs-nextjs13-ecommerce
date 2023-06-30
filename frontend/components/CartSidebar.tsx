@@ -56,7 +56,13 @@ const CartSidebar = ({ isOpen, setCartIsOpen }: Props) => {
                                                     setCartIsOpen(false);
                                                 }}
                                             >View Cart</button>
-                                            <button className='p-3 border border-blue-800 text-white transition delay-75 bg-blue-800 hover:bg-blue-900'>Checkout</button>
+                                            <button
+                                                className='p-3 border border-blue-800 text-white transition delay-75 bg-blue-800 hover:bg-blue-900'
+                                                onClick={() => {
+                                                    route.replace('/checkout');
+                                                    setCartIsOpen(false);
+                                                }}
+                                            >Checkout</button>
                                         </div>
                                     </div>
                                 ) : (
@@ -64,7 +70,10 @@ const CartSidebar = ({ isOpen, setCartIsOpen }: Props) => {
                                         <div className='flex flex-col gap-5 px-6 py-2'>
                                             <button
                                                 className='p-3 border border-blue-800 text-white transition delay-75 bg-blue-800 hover:bg-blue-900'
-                                                onClick={() => setCartIsOpen(false)}
+                                                onClick={() => {
+                                                    setCartIsOpen(false);
+                                                    route.replace('/products');
+                                                }}
                                             >
                                                 Continue Shopping
                                             </button>

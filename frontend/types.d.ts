@@ -1,3 +1,11 @@
+type Session = {
+    user?: {
+        name?: string | null | undefined
+        email?: string | null | undefined
+        image?: string | null | undefined
+    }
+};
+
 type Product = {
     _id: string;
     itemname: string;
@@ -31,11 +39,5 @@ type CartItem = {
 
 type CartData = {
     productData: CartItem,
-    session: {
-        user?: {
-            name?: string | null | undefined
-            email?: string | null | undefined
-            image?: string | null | undefined
-        }
-    }
+    session: Sesion,
 };
