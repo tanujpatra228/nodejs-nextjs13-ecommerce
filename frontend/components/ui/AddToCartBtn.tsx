@@ -1,4 +1,5 @@
 "use client"
+import React from 'react';
 import BagIcon from './BagIcon';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -11,6 +12,7 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 type Props = {
     product: Product;
     showQty?: boolean;
+    itemsize?: string;
 };
 
 const handleAddToCart = async (cartData: CartData, dispatch: any) => {
@@ -21,17 +23,20 @@ const handleAddToCart = async (cartData: CartData, dispatch: any) => {
     }
 }
 
-const AddToCartBtn = ({ product, showQty }: Props) => {
+const AddToCartBtn = ({ product, showQty, itemsize }: Props) => {
     const dispatch = useDispatch();
     const { data: session } = useSession();
     const [qty, setQty] = useState(1);
-    const productData = {
+    const productData: CartItem = {
         id: product._id,
         itemname: product.itemname,
         itemimage: product.itemimage,
         category: product.category,
         finalrate: product.finalrate,
-        qty: qty,
+        cartQty: [{
+            itemsize: itemsize || product?.itemsize[0],
+            qty: qty,
+        }],
     };
     const router = useRouter();
     return (

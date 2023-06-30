@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Breadcrumb from "@/components/Breadcrumb";
 import ProductImage from "@/components/ui/ProductImage";
 import { getAllProducts, getProductById } from "@/utils/fetchDB";
-import AddToCartBtn from '@/components/ui/AddToCartBtn';
+import VariationList from '@/components/VariationList';
 
 type ParamProps = {
     params: { id: string };
@@ -72,26 +72,8 @@ const SingleProduct = async ({ params }: ParamProps) => {
                         </div>
                         <p className="text-gray-500 py-4">Lorem ipsum, dolor sit, amet consectetur adipisicing elit. Vitae exercitationem porro saepe ea harum corrupti vero id laudantium enim, libero blanditiis expedita cupiditate a est.</p>
 
-                        <div className='flex justify-start items-center gap-2 py-4'>
-                            {
-                                // Size
-                                product?.itemsize.length !== 0 &&
-                                (
-                                    <>
-                                        <p className="text-gray-500">Size:</p>
-                                        {
-                                            product?.itemsize.map((element: string, index: number) => (
-                                                <button key={element} className={`px-5 py-2 transition-shadow duration-300  ${index === 0 ? 'bg-blue-800 text-white' : 'bg-blue-100 text-blue-800'} hover:shadow-lg rounded-full`}>{element}</button>
-                                            ))
-                                        }
-                                    </>
-                                )
-                            }
-                        </div>
+                        <VariationList product={product} />
 
-                        <div className="flex items-center py-4">
-                            <AddToCartBtn product={product} showQty={true} />
-                        </div>
                         <div className="mb-4">
                             <h2 className="text-lg font-semibold mb-2">Product Details</h2>
                             <ul className="text-sm text-gray-600">

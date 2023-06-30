@@ -34,7 +34,10 @@ type CartItem = {
     itemimage: string,
     category: string,
     finalrate: number,
-    qty: number,
+    cartQty: [{
+        itemsize?: string;
+        qty: number,
+    }]
 }
 
 type CartData = {

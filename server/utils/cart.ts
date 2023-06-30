@@ -5,7 +5,11 @@ type CartProduct = {
     itemimage: string,
     category: string,
     finalrate: number,
-    qty: number,
+    cartQty: [{
+        itemsize?: string;
+        qty: number,
+        sizeTotal?: number,
+    }]
 }
 
 type CartItem = {
@@ -15,13 +19,30 @@ type CartItem = {
     __v: number
 };
 
-export const getCartTotal = (cart: CartItem) => {
-    let total = 0;
-    if (!cart) return 0;
+export function calculateTotalCartAmount({ products }: CartItem) {
+    let totalAmount = 0;
+    if (!products) return 0;
 
-    cart.products.forEach((product) => {
-        total += product.finalrate * product.qty;
-    });
+    for (const cartProduct of products) {
+        for (const cartQty of cartProduct.cartQty) {
+            const { qty, sizeTotal } = cartQty;
+            const productAmount = cartProduct.finalrate * qty;
+            totalAmount += sizeTotal ? sizeTotal : productAmount;
+        }
+    }
 
-    return total;
+    return totalAmount;
+}
+
+export function calculateTotalQuantity({ products }: CartItem) {
+    let totalQuantity = 0;
+
+    for (const cartProduct of products) {
+        for (const cartQty of cartProduct.cartQty) {
+            const { qty } = cartQty;
+            totalQuantity += qty;
+        }
+    }
+
+    return totalQuantity;
 }

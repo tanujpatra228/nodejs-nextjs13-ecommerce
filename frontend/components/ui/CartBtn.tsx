@@ -26,7 +26,6 @@ const CartBtn = () => {
     });
 
     useEffect(() => {
-        console.log('session', session);
         session ? dispatch(getCart(session)) : dispatch(clearCart());
     }, [session]);
 
