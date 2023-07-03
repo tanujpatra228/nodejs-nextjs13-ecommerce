@@ -31,12 +31,6 @@ const NavBar = () => {
                             <Link href='/products' className='className="transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500'>Products</Link>
                         </li>
                         <li className="text-lg pr-8">
-                            <Link href='/blog' className="transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>Blog</Link>
-                        </li>
-                        <li className="text-lg pr-8">
-                            <Link href='/contact' className="transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>Contact</Link>
-                        </li>
-                        <li className="text-lg pr-8">
                             <AuthButton />
                         </li>
                     </ul>
@@ -51,10 +45,8 @@ const NavBar = () => {
             {/* MOBILE MENU */}
             <div id="mobileMenu" className="hidden flex w-full mx-auto py-8 text-center">
                 <div className="flex flex-col justify-center items-center w-full">
-                    <a href="#" className="block text-gray-200 cursor-pointer py-3 transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>Home</a>
-                    <a href="#" className="block text-gray-200 cursor-pointer mt-1 py-3 transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>About</a>
-                    <a href="#" className="block text-gray-200 cursor-pointer mt-1 py-3 transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>Blog</a>
-                    <a href="#" className="block text-gray-200 cursor-pointer mt-1 py-3 transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>Contact</a>
+                    <Link href="/" className="block text-gray-200 cursor-pointer py-3 transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>Home</Link>
+                    <Link href="/products" className="block text-gray-200 cursor-pointer mt-1 py-3 transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500" style={{ textUnderlineOffset: 8 }}>Products</Link>
                 </div>
             </div>
         </nav>

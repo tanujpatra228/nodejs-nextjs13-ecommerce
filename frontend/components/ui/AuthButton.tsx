@@ -10,9 +10,8 @@ const AuthButton = () => {
     const { data: session } = useSession();
     const route = useRouter();
     const links = [
-        { href: '/account-settings', label: 'Account settings' },
-        { href: '/support', label: 'Support' },
-        { href: '/license', label: 'License' },
+        { href: '/account', label: 'Account' },
+        { href: '/order-history', label: 'Order History' },
         { href: '#logout', label: 'Log out' },
     ];
 

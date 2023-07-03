@@ -43,7 +43,7 @@ const CartTableRow = ({ cartId, product }: Props) => {
             {
                 cartQty.length > 1 ? (
                     cartQty.map((size: { itemsize?: string, qty: number }) => (
-                        <div className="flex items-center max-h-32 hover:bg-gray-100 -mx-8 px-6 py-5 rounded-lg overflow-hidden" key={_id}>
+                        <div className="flex items-center max-h-32 hover:bg-gray-100 -mx-8 px-6 py-5 rounded-lg overflow-hidden" key={`${_id}-${size.itemsize}`}>
                             <div className="flex w-2/5">
                                 <div className="w-20">
                                     <ProductImage product={product} width={50} />
@@ -62,7 +62,7 @@ const CartTableRow = ({ cartId, product }: Props) => {
                                     <AiOutlineMinus />
                                 </button>
 
-                                <input className="mx-2 text-center w-8" type="text" value={size.qty} readOnly />
+                                <input className="mx-2 text-center w-8 rounded-md" type="text" value={size.qty} readOnly />
 
                                 <button onClick={() => incrementQty(size.itemsize || '')}>
                                     <AiOutlinePlus />
@@ -92,7 +92,7 @@ const CartTableRow = ({ cartId, product }: Props) => {
                                 <AiOutlineMinus />
                             </button>
 
-                            <input className="mx-2 border text-center w-8" type="text" value={cartQty[0].qty} />
+                            <input className="mx-2 text-center w-8 rounded-md" type="text" value={cartQty[0].qty} readOnly />
 
                             <button onClick={() => incrementQty(cartQty[0].itemsize || '')}>
                                 <AiOutlinePlus />
