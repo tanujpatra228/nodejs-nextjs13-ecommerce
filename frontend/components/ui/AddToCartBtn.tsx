@@ -4,10 +4,10 @@ import BagIcon from './BagIcon';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/slice/cartMethods';
 import { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { useAppDispatch } from '@/utils/hooks';
 
 type Props = {
     product: Product;
@@ -24,7 +24,7 @@ const handleAddToCart = async (cartData: CartData, dispatch: any) => {
 }
 
 const AddToCartBtn = ({ product, showQty, itemsize }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { data: session } = useSession();
     const [qty, setQty] = useState(1);
     const productData: CartItem = {

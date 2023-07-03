@@ -1,10 +1,10 @@
 'use client'
-import { useDispatch } from "react-redux";
 import ProductImage from "./ui/ProductImage";
 import { CiCircleRemove } from "react-icons/ci";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { removeFromCart, updateQty } from '@/redux/slice/cartMethods';
 import Link from "next/link";
+import { useAppDispatch } from "@/utils/hooks";
 
 type Props = {
     cartId: string;
@@ -13,17 +13,16 @@ type Props = {
 
 const CartTableRow = ({ cartId, product }: Props) => {
     const { _id, id, itemname, finalrate, category, cartQty } = product;
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    // TODO: Fix the increment and decrement methods
     const incrementQty = (size: string) => {
-        if (!product) return;
+        if (!product || !product.id) return;
         const sizeToUpdate = product.cartQty.findIndex((p: { itemsize?: string }) => p.itemsize === size);
         const newQty = product.cartQty[sizeToUpdate].qty + 1;
         dispatch(updateQty({ cartId: cartId, id: product.id, qty: newQty, size: size }));
     }
     const decrementQty = (size: string) => {
-        if (!product) return;
+        if (!product || !product.id) return;
 
         const sizeToUpdate = product.cartQty.findIndex((p: { itemsize?: string }) => p.itemsize === size);
         const newQty = product.cartQty[sizeToUpdate].qty - 1;
@@ -33,6 +32,10 @@ const CartTableRow = ({ cartId, product }: Props) => {
         } else {
             dispatch(removeFromCart({ cartId: cartId, id: product.id, size: size }));
         }
+    }
+    const handleRemoveFromCart = ({ cartId, id, size }: { cartId: string, id: string | undefined, size?: string }) => {
+        if (!id || !size) return;
+        dispatch(removeFromCart({ cartId, id, size: size }));
     }
 
     return (
@@ -49,7 +52,7 @@ const CartTableRow = ({ cartId, product }: Props) => {
                                     <span className="font-bold text-sm"><Link href={`products/${id}`}>{itemname}</Link></span>
                                     <span className="text-xs capitalize">{category}</span>
                                     <span className="text-xs capitalize">Size: {size.itemsize}</span>
-                                    <button onClick={() => dispatch(removeFromCart({ cartId: cartId, id: id, size: size.itemsize }))}>
+                                    <button onClick={() => handleRemoveFromCart({ cartId: cartId, id: id, size: size.itemsize })}>
                                         <CiCircleRemove className="text-xl text-red-500" />
                                     </button>
                                 </div>
@@ -79,7 +82,7 @@ const CartTableRow = ({ cartId, product }: Props) => {
                                 <span className="font-bold text-sm"><Link href={`products/${id}`}>{itemname}</Link></span>
                                 <span className="text-xs capitalize">{category}</span>
                                 <span className="text-xs capitalize">Size: {cartQty[0].itemsize}</span>
-                                <button onClick={() => dispatch(removeFromCart({ cartId: cartId, id: id }))}>
+                                <button onClick={() => handleRemoveFromCart({ cartId: cartId, id: id })}>
                                     <CiCircleRemove className="text-xl text-red-500" />
                                 </button>
                             </div>

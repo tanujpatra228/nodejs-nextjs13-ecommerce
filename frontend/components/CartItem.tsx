@@ -3,8 +3,8 @@
 import Link from "next/link";
 import ProductImage from "./ui/ProductImage";
 import { CiCircleRemove } from 'react-icons/ci'
-import { useDispatch } from "react-redux";
 import { removeFromCart } from "@/redux/slice/cartMethods";
+import { useAppDispatch } from "@/utils/hooks";
 
 type Props = {
     cartId: string;
@@ -12,8 +12,12 @@ type Props = {
 };
 
 const CartItem = ({ cartId, product }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { id, itemname, finalrate, cartQty } = product;
+    const handleRemoveFromCart = ({ cartId, id, size }: { cartId: string, id: string | undefined, size?: string }) => {
+        if (!id || !size) return;
+        dispatch(removeFromCart({ cartId, id, size: size }));
+    }
     return (
         <>
             {
@@ -29,7 +33,7 @@ const CartItem = ({ cartId, product }: Props) => {
                                         <span className="font-bold text-sm"><Link href={`products/${id}`}>{itemname}</Link></span>
                                         <span className="text-sm">Size: {size.itemsize}</span>
                                         <span className="text-sm">{size.qty} x ₹${finalrate}</span>
-                                        <button onClick={() => dispatch(removeFromCart({ cartId, id, size: size.itemsize }))}>
+                                        <button onClick={() => handleRemoveFromCart({ cartId, id, size: size.itemsize })}>
                                             <CiCircleRemove className="text-xl text-red-500" />
                                         </button>
                                     </div>
@@ -48,7 +52,7 @@ const CartItem = ({ cartId, product }: Props) => {
                                     <span className="font-bold text-sm"><Link href={`products/${id}`}>{itemname}</Link></span>
                                     <span className="text-sm">Size: {cartQty[0].itemsize}</span>
                                     <span className="text-sm">{cartQty[0].qty} x ₹${finalrate}</span>
-                                    <button onClick={() => dispatch(removeFromCart({ cartId, id }))}>
+                                    <button onClick={() => handleRemoveFromCart({ cartId, id })}>
                                         <CiCircleRemove className="text-xl text-red-500" />
                                     </button>
                                 </div>
