@@ -41,9 +41,10 @@ type UpdateQtyRequestType = {
     cartId: string;
     id: string;
     qty: number;
+    size?: string;
 };
-export const updateQty = createAsyncThunk('updateQty', async ({ cartId, id, qty }: UpdateQtyRequestType) => {
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart/update-qty`, { cartId, id, qty });
+export const updateQty = createAsyncThunk('updateQty', async ({ cartId, id, qty, size }: UpdateQtyRequestType) => {
+    const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart/update-qty`, { cartId, id, qty, size });
 
     if (response.status === 200) {
         return response.data;

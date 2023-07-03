@@ -10,14 +10,18 @@ const CartPage = () => {
     const products = cart.data.products || [];
 
     const getCartTotal = () => {
-        let total = 0;
-        if (!cart) return 0;
+        let totalAmount = 0;
+        if (!products) return 0;
 
-        products.forEach((product: CartItem) => {
-            total += product.finalrate * product.qty;
-        });
+        for (const cartProduct of products) {
+            for (const cartQty of cartProduct.cartQty) {
+                const { qty, sizeTotal } = cartQty;
+                const productAmount = cartProduct.finalrate * qty;
+                totalAmount += sizeTotal | productAmount;
+            }
+        }
 
-        return total;
+        return totalAmount;
     }
 
     return (

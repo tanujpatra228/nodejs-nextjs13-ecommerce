@@ -117,7 +117,7 @@ router.patch('/remove-product', async (req: Request, res: Response) => {
 });
 
 router.patch('/update-qty', async (req: Request, res: Response) => {
-    const { cartId, id, qty } = req.body;
+    const { cartId, id, qty, size } = req.body;
 
     try {
         const cart = await Cart.findById(cartId);
@@ -126,7 +126,12 @@ router.patch('/update-qty', async (req: Request, res: Response) => {
         }
 
         const productIndex = cart.products.findIndex((product: CartProduct) => product.id === id);
-        cart.products[productIndex].cartQty.qty = qty;
+        if (productIndex === -1) {
+            return res.status(404).json({ error: 'Product not found in the cart' });
+        }
+
+        const sizeToRemove = cart.products[productIndex].cartQty.findIndex((p: { itemsize: string }) => p.itemsize === size);
+        cart.products[productIndex].cartQty[sizeToRemove].qty = qty;
         cart.markModified('products');
         await cart.save();
 
