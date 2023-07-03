@@ -82,7 +82,7 @@ const CartTableRow = ({ cartId, product }: Props) => {
                                 <span className="font-bold text-sm"><Link href={`products/${id}`}>{itemname}</Link></span>
                                 <span className="text-xs capitalize">{category}</span>
                                 <span className="text-xs capitalize">Size: {cartQty[0].itemsize}</span>
-                                <button onClick={() => handleRemoveFromCart({ cartId: cartId, id: id })}>
+                                <button onClick={() => handleRemoveFromCart({ cartId: cartId, id: id, size: cartQty[0].itemsize })}>
                                     <CiCircleRemove className="text-xl text-red-500" />
                                 </button>
                             </div>
