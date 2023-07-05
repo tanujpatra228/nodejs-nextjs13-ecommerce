@@ -1,12 +1,12 @@
 'use client'
-import CartTableRow from "@/components/CartTableRow";
+import { useAppSelector } from "@/utils/hooks";
 import EmptyResource from "@/components/ui/EmptyResource";
 import Link from "next/link";
 import { BsArrowLeft } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import CartPageTable from "@/components/CartPageTable";
 
 const CartPage = () => {
-    const { cart } = useSelector((state: any) => state);
+    const { cart } = useAppSelector((state: any) => state);
     const products = cart.data.products || [];
 
     const getCartTotal = () => {
@@ -23,7 +23,6 @@ const CartPage = () => {
 
         return totalAmount;
     }
-
     return (
         <>
             <section className="mt-32 mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,16 +46,8 @@ const CartPage = () => {
                                             <h1 className="font-semibold text-2xl">Shopping Cart</h1>
                                             <h2 className="font-semibold text-2xl">{products.length && products.length > 1 ? `${products.length} Items` : `${products.length} Item`}</h2>
                                         </div>
-                                        <div className="flex mt-10 mb-5">
-                                            <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
-                                            <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
-                                            <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
-                                            <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
-                                        </div>
 
-                                        <div className="max-h-96 overflow-hidden overflow-y-auto will-change-scroll space-y-2">
-                                            {products.length > 0 && products.map((product: CartItem) => <CartTableRow key={product.id} cartId={cart.data._id} product={product} />)}
-                                        </div>
+                                        <CartPageTable cartId={cart.data._id} products={products} />
 
                                         <div className="flex justify-between mt-10 mb-5">
                                             <Link href="/products" className="font-semibold text-indigo-600 text-sm mt-10 flex items-center gap-2">
