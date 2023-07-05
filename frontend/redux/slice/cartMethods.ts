@@ -29,8 +29,6 @@ type RemoveRequestType = {
     size: string;
 };
 export const removeFromCart = createAsyncThunk('removeFromCart', async ({ cartId, id, size }: RemoveRequestType) => {
-    console.log('cartId', cartId);
-
     const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart/remove-product`, { cartId, id, size });
 
     if (response.status === 200) {
