@@ -9,10 +9,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    phone: {
+        type: String,
+    },
     password: {
         type: String,
-        required: true,
     },
+    shippingAddress: {
+        type: String,
+    }
 });
 
 module.exports = mongoose.model("User", userSchema);

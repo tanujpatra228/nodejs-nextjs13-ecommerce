@@ -1,8 +1,10 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import type { NextAuthOptions } from "next-auth";
+import axios from "axios";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -23,7 +25,6 @@ export const authOptions = {
     pages: {
         signIn: '/login',
     },
-    strategy: "jwt",
     secret: process.env.JWT_SECRET,
 };
 
