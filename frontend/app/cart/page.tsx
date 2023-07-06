@@ -101,7 +101,7 @@ const CartPage = () => {
                                         <div className="border-t mt-8">
                                             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                                                 <span className="capitalize">Total cost</span>
-                                                <span>₹{(getCartTotal() + calcShipping(getCartTotal()))}</span>
+                                                <span>₹{(calcShipping(getCartTotal()))}</span>
                                             </div>
                                             <button className="bg-blue-800 font-semibold hover:bg-blue-900 py-3 text-sm text-white uppercase w-full">Checkout</button>
                                         </div>
